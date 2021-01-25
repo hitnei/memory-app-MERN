@@ -7,15 +7,15 @@ import postRoutes from "./routes/posts.js";
 
 const app = express();
 
-app.use(bodyParser.json({ limit: "30bm", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30bm", extended: true }));
 app.use(cors());
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/posts", postRoutes);
 
 // connect mongodb
 const CONNECTION_URL =
-  "mongodb+srv://admin:admin@cluster0.72df8.mongodb.net/<dbname>?retryWrites=true&w=majority";
+  "mongodb+srv://admin:admin@cluster0.72df8.mongodb.net/memories?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;
 
 mongoose
@@ -24,6 +24,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
+    console.log('connected database!');
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
   })
   .catch((err) => console.log(err.message));
